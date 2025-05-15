@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Sheet</title>
+    <link rel="stylesheet" href="role.css">
+</head>
+<body>
+    <div class="container">
+        <div class="one">
+            <h1>STUDENT</h1>
+            <img class="img" src="Student.png" alt="">
+            <button onclick="student()">Register</button>
+        </div>
+        <div class="two">
+            <h1>TEACHER</h1>
+            <img class="img" src="Teacher.png" alt="">
+            <button onclick="teacher()">Register</button>
+        </div>
+    </div>
+    <script>
+        function student() {
+      window.location.href = "s_register.html"; 
+    }
+    function teacher() {
+      window.location.href = "t_register.html"; 
+    }
+    </script>
+</body>
+</html>

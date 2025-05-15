@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+:root {
+  --out: #fafafa;
+  --in: #ffff;
+  --font: black;
+  --extra: #925fe2;
+  --hover: white;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  font-family: Poppins;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  background-color: var(--out);
+}
+.one {
+  width: 50%;
+  padding: 10px;
+  background-color: var(--in);
+  border-radius: 8px;
+  box-shadow: 4px 4px 10px 10px rgb(206, 206, 206);
+}
+
+.two {
+  width: 50%;
+  padding: 10px;
+  background-color: var(--in);
+  border-radius: 8px;
+  box-shadow: 4px 4px 8px 8px rgb(206, 206, 206);
+}
+.one h1 {
+  font-family: Raleway;
+  font-size: 1.4rem;
+  margin: 10px 10px;
+}
+.two h1 {
+  font-family: Raleway;
+  font-size: 1.4rem;
+  margin: 10px 10px;
+}
+.container {
+  display: grid;
+  grid-template-rows: 2(300px,1fr); /* Default for small screens */
+  gap: 10px;
+  width: auto;
+  margin:auto;
+  height: auto;
+  background-color: var(--in);
+  border-radius: 10px;
+  box-shadow: 4px 4px 10px 10px rgb(206, 206, 206);
+  padding: 20px;
+}
+.img {
+  width: 200px;
+  height: 200px;
+  align-self: center;
+  margin-left: 12px;
+}
+button {
+  width: 100%;
+  height: 35px;
+  font-family: Poppins;
+  background-color: var(--extra);
+  color: var(--hover);
+  margin-top: 15px;
+  border: 1px solid;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+button:hover {
+  color: var(--extra);
+  background-color: var(--hover);
+  border-color: var(--extra);
+}
+
