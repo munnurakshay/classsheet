@@ -26,25 +26,26 @@ body {
 }
 
 .container {
-    width: 95%;
-    height: auto;
+    width: 60%;
+    height: 400px;
     background-color: var(--in);
     border-radius: 10px;
     box-shadow: 4px 4px 10px 10px rgb(206, 206, 206);
     padding: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
 }
 
-.one,
+.one{
+    width: 50%;
+}
 .two {
-    width: 100%;
+    width: 50%;
+    display: flex;
+    justify-content:center;
 }
 
-.two {
-    height: 200px;
-}
 
 h4 {
     font-size: 20px;
@@ -55,7 +56,7 @@ h4 {
 
 .inputfield {
     height: 40px;
-    width: 260px;
+    width: 100%;
     position: relative;
     margin-top: 18px;
     border: none;
@@ -65,7 +66,7 @@ h4 {
 .inputfield > input {
     border: none;
     margin-top: 10px;
-    width: 230px;
+    width: 95%;
     height: 20px;
     color: var(--font);
     font-family: Poppins, sans-serif;
@@ -128,19 +129,4 @@ button:hover {
 }
 
 
-@media screen and (min-width: 800px) {
-    .container {
-        width: 70%;
-        height: 400px;
-        flex-direction: row-;
-    }
 
-    .one {
-        width: 50%;
-        padding: 10px;
-    }
-
-    .two {
-        width: 50%;
-    }
-}
