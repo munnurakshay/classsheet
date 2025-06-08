@@ -128,5 +128,23 @@ button:hover {
     text-align: center;
 }
 
-
-
+@media screen and (max-width: 800px) {
+    .container {
+        justify-content: center;
+        height: max-content;
+        flex-direction: column-reverse;
+    }
+    .one{
+        width: 100%;
+        height: 100%;
+    }
+    .two img{
+        height: 150px;
+        width: 150px;
+    }
+    .two{
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+    }
+}

@@ -1,106 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Class Sheet</title>
     <script
       src="https://kit.fontawesome.com/4ff394e2b3.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="one">
-            <h4>Login</h4> 
-          <fieldset class="inputfield">
-            <i class="fa-solid fa-envelope"></i><input type="email" placeholder="E-Mail Id" id="email" required />
-          </fieldset>
-          <fieldset class="inputfield">
-            <i class="fa-solid fa-lock"></i
-            ><input
-              type="password"
-              placeholder="Password"
-              id="password"
-              required
-            />
-          </fieldset>
-          <br />
-          <a href="#">Forgot Password ?</a>
-          <br />
-          <button type="submit" id="submit">Login</button>
-          <br />
-          <div class="links">
-            Don't have an account ?<a href="role.html">REGISTER</a>
-            <br>
-            <p>OR</p>
-          </div>
+      <div class="one">
+        <h4>Login</h4>
+        <fieldset class="inputfield">
+          <i class="fa-solid fa-envelope"></i
+          ><input type="email" placeholder="E-Mail Id" id="email" required />
+        </fieldset>
+        <fieldset class="inputfield">
+          <i class="fa-solid fa-lock"></i
+          ><input
+            type="password"
+            placeholder="Password"
+            id="password"
+            required
+          />
+        </fieldset>
+        <br />
+        <a href="#">Forgot Password ?</a>
+        <br />
+        <button type="submit" id="submit">Login</button>
+        <br />
+        <div class="links">
+          <p>OR</p>
+          <button id="admin">Admin Login</button>
         </div>
-        <div class="two">
-          <img src="Student.png" alt="">
-        </div>
+      </div>
+      <div class="two">
+        <img src="Student.png" alt="" />
+      </div>
     </div>
     <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+      } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+      } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyD3FmOAsQg7PM0WaGGBQOpgbjFNsXOaidY",
-  authDomain: "smartclass-93dd3.firebaseapp.com",
-  projectId: "smartclass-93dd3",
-  storageBucket: "smartclass-93dd3.appspot.com",
-  messagingSenderId: "615646418497",
-  appId: "1:615646418497:web:69f5871dab6037283058c0",
-};
+      // Firebase config
+      const firebaseConfig = {
+        apiKey: "AIzaSyD3FmOAsQg7PM0WaGGBQOpgbjFNsXOaidY",
+        authDomain: "smartclass-93dd3.firebaseapp.com",
+        projectId: "smartclass-93dd3",
+        storageBucket: "smartclass-93dd3.appspot.com",
+        messagingSenderId: "615646418497",
+        appId: "1:615646418497:web:69f5871dab6037283058c0",
+      };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
 
-// Handle login
-document.getElementById("submit").addEventListener("click", async () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+      // Handle login
+      document.getElementById("submit").addEventListener("click", async () => {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const uid = userCredential.user.uid;
+        try {
+          const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const uid = userCredential.user.uid;
 
-    // Get user role from Firestore
-    const userDoc = await getDoc(doc(db, "users", uid));
+          // Get user role from Firestore
+          const userDoc = await getDoc(doc(db, "users", uid));
 
-    if (userDoc.exists()) {
-      const userData = userDoc.data();
-      const role = userData.role;
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            const role = userData.role;
 
-      if (role === "student") {
-        window.location.href = "student-dashboard.html";
-      } else if (role === "teacher") {
-        window.location.href = "teacher-dashboard.html";
-      } else {
-        alert("Unknown user role.");
-      }
-    } else {
-      alert("User data not found.");
-    }
-  } catch (error) {
-    alert("Login failed: " + error.message);
-  }
-});
-</script>
-</body>
+            if (role === "student") {
+              window.location.href = "student-dashboard.html";
+            } else if (role === "teacher") {
+              window.location.href = "teacher-dashboard.html";
+            } else {
+              alert("Unknown user role.");
+            }
+          } else {
+            alert("User data not found.");
+          }
+        } catch (error) {
+          alert("Login failed: " + error.message);
+        }
+      });
+    </script>
+  </body>
 </html>

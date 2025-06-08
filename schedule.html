@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Classes</title>
+    <link rel="stylesheet" href="classes.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <input type="checkbox" id="check" hidden />
+      <label for="check" class="menu"><i class="material-icons">menu</i></label>
+      <nav class="sidebar" aria-label="Sidebar navigation" id="bar">
+        <ul>
+          <h3>Profile</h3>
+          <div class="profile">
+            <img id="profile_pic" src="images.png" alt="Profile Picture" />
+            <div class="info">
+              <h2 id="name">Akshay Munnur</h2>
+              <p id="subject">JavaScript</p>
+            </div>
+          </div>
+
+          <h3>Main Menu</h3>
+          <li>
+            <a href="teacher_dashboard.html" aria-label="Dashboard">
+              <span class="icon"><i class="material-icons">dashboard</i></span>
+              <span class="Name">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="classes.html" aria-label="Classes">
+              <span class="icon"
+                ><i class="material-icons">meeting_room</i></span
+              >
+              <span class="Name">Classes</span>
+            </a>
+          </li>
+          <li>
+            <a href="Assignments.html" aria-label="Assignments">
+              <span class="icon"><i class="material-icons">menu_book</i></span>
+              <span class="Name">Assignments</span>
+            </a>
+          </li>
+          <li>
+            <a href="notice.html" aria-label="Notice">
+              <span class="icon"><i class="material-icons">article</i></span>
+              <span class="Name">Notice</span>
+            </a>
+          </li>
+          <li>
+            <a href="schedule.html" aria-label="Schedule">
+              <span class="icon"
+                ><i class="material-icons">calendar_month</i></span
+              >
+              <span class="Name">Schedule</span>
+            </a>
+          </li>
+          <li>
+            <a href="index.html" aria-label="Logout">
+              <span class="icon"><i class="material-icons">logout</i></span>
+              <span class="Name">Logout</span>
+            </a>
+          </li>
+
+          <h3>Other</h3>
+          <li>
+            <a href="settings.html" aria-label="Settings">
+              <span class="icon"><i class="material-icons">settings</i></span>
+              <span class="Name">Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <main class="contents"></main>
+  </body>
+</html>
