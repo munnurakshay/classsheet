@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="student_dashboard.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- Sidebar container -->
+
+  <div id="sidebar"></div>
+
+  <!-- Main dashboard content -->
+  <main class="main">
+    <header class="search">
+      <h3>Dashboard</h3>
+      <div class="inputfield">
+        <input type="search" placeholder="Search here..." aria-label="Search" />
+      </div>
+    </header>
+
+    <section class="contents">
+      <button class="box" aria-label="Students">
+        <div class="board">
+          <span class="icon"><i class="material-icons">person</i></span>
+          <span class="Name">Students</span>
+        </div>
+      </button>
+
+      <button class="box" aria-label="Attendance">
+        <div class="board">
+          <span class="icon"><i class="material-icons">badge</i></span>
+          <span class="Name">Attendance</span>
+        </div>
+      </button>
+
+      <button class="box" aria-label="Notes">
+        <div class="board">
+          <span class="icon"><i class="material-icons">description</i></span>
+          <span class="Name">Notes</span>
+        </div>
+      </button>
+
+      <button class="box" aria-label="Notice">
+        <div class="board">
+          <span class="icon"><i class="material-icons">campaign</i></span>
+          <span class="Name">Notice</span>
+        </div>
+      </button>
+
+      <button class="box" aria-label="Chat">
+        <div class="board">
+          <span class="icon"><i class="material-icons">chat</i></span>
+          <span class="Name">Chat</span>
+        </div>
+      </button>
+    </section>
+  </main>
+
+  <!-- JS to load sidebar -->
+  <script>
+    fetch('sidebar.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('sidebar').innerHTML = html;
+      });
+  </script>
+</body>
+
+</html>

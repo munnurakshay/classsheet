@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class Sheet</title>
+  <script src="https://kit.fontawesome.com/4ff394e2b3.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="admin.css" />
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="one">
+      <h4>Register</h4>
+      <fieldset class="inputfield">
+        <i class="fa-solid fa-user"></i><input type="name" placeholder="Enter Full Name" id="name" required />
+      </fieldset>
+      <fieldset class="inputfield">
+        <i class="fa-solid fa-user"></i><input type="date" placeholder="Date of Birth" id="dob" required />
+      </fieldset>
+      <fieldset class="inputfield">
+        <i class="fa-solid fa-user"></i><input type="number" placeholder="Enter Mobile Number" id="phone" required />
+      </fieldset>
+      <fieldset class="inputfield">
+        <i class="fa-solid fa-envelope"></i><input type="email" placeholder="E-Mail Id" id="email" required />
+      </fieldset>
+      <fieldset class="inputfield">
+        <i class="fa-solid fa-lock"></i><input type="password" placeholder="Password" id="password" required />
+      </fieldset>
+      <br />
+      <button type="submit" id="submit">Register</button>
+      <br />
+    </div>
+  </div>
+  <script>
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault(); // prevent form submission or reload
+        document.getElementById("submit").click(); // trigger login button click
+      }
+    });
+  </script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD3FmOAsQg7PM0WaGGBQOpgbjFNsXOaidY",
+      authDomain: "smartclass-93dd3.firebaseapp.com",
+      projectId: "smartclass-93dd3",
+      storageBucket: "smartclass-93dd3.appspot.com",
+      messagingSenderId: "615646418497",
+      appId: "1:615646418497:web:69f5871dab6037283058c0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    document.getElementById("submit").addEventListener("click", async () => {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const dob = document.getElementById("dob").value.trim();
+      const phone = Number(document.getElementById("phone").value.trim());
+
+      if (!name || !email || !password || !dob || !phone) {
+        alert("All fields are required.");
+        return;
+      }
+
+      if (!email.endsWith("@biet.ac.in")) {
+        alert("Use BIET institutional email.");
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = userCredential.user.uid;
+
+        await setDoc(doc(db, "users", uid), {
+          uid: uid,
+          name: name,
+          email: email,
+          dob: dob,
+          phone: phone,
+          role: "admin",
+          createdAt: new Date()
+        });
+
+        alert("Admin registered successfully!");
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    });
+  </script>
+
+</body>
+
+</html>

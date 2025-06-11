@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class Sheet Admin</title>
+  <script src="https://kit.fontawesome.com/4ff394e2b3.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="one">
+      <h4>Login</h4>
+      <fieldset class="inputfield">
+        <i class="fa-solid fa-envelope"></i><input type="email" placeholder="E-Mail Id" id="email" required />
+      </fieldset>
+      <fieldset class="inputfield">
+        <i class="fa-solid fa-lock"></i><input type="password" placeholder="Password" id="password" required />
+      </fieldset>
+      <br />
+      <a href="forgot_pass.html">Forgot Password ?</a>
+      <br />
+      <button type="submit" id="submit">Login</button>
+      <br />
+      <div class="links">
+        <p>OR</p>
+        <button id="admin">Register</button>
+      </div>
+    </div>
+    <div class="two">
+      <img src="Institution.png" alt="" />
+    </div>
+  </div>
+  <script>
+    // Redirect to teacher register page
+    document.getElementById("admin").addEventListener("click", () => {
+      window.location.href = "admin_register.html";
+    });
+
+    // Handle login when Enter is pressed
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault(); // prevent form submission or reload
+        document.getElementById("submit").click(); // trigger login button click
+      }
+    });
+  </script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyD3FmOAsQg7PM0WaGGBQOpgbjFNsXOaidY",
+      authDomain: "smartclass-93dd3.firebaseapp.com",
+      projectId: "smartclass-93dd3",
+      storageBucket: "smartclass-93dd3.appspot.com",
+      messagingSenderId: "615646418497",
+      appId: "1:615646418497:web:69f5871dab6037283058c0",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    document.getElementById("submit").addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        alert("Please enter both email and password.");
+        return;
+      }
+      if (!email.endsWith("@biet.ac.in")) {
+        alert("Please use your BIET institutional email (ending with @biet.ac.in).");
+        return;
+      }
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const uid = userCredential.user.uid;
+        const userDoc = await getDoc(doc(db, "users", uid));
+
+        if (userDoc.exists()) {
+          const role = userDoc.data().role;
+          if (role === "admin") {
+            window.location.href = "teacher_dashboard.html";
+          } else {
+            alert("Access denied. This is the Teacher login page.");
+          }
+        } else {
+          alert("User data not found.");
+        }
+      } catch (error) {
+        alert("Login failed: " + error.message);
+      }
+    });
+  </script>
+</body>
+
+</html>

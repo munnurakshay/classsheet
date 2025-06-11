@@ -29,18 +29,17 @@
       <br />
       <div class="links">
         <p>OR</p>
-        <button id="teacher">Teacher Login</button>
+        <button id="admin">Admin Login</button>
       </div>
     </div>
     <div class="two">
-      <img src="Student.png" alt="" />
+      <img src="Teacher.png" alt="" />
     </div>
   </div>
-
   <script>
     // Redirect to teacher register page
-    document.getElementById("teacher").addEventListener("click", () => {
-      window.location.href = "t_login.html";
+    document.getElementById("admin").addEventListener("click", () => {
+      window.location.href = "#";
     });
 
     // Handle login when Enter is pressed
@@ -51,13 +50,11 @@
       }
     });
   </script>
-
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import {
       getAuth,
       signInWithEmailAndPassword,
-      sendPasswordResetEmail
     } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import {
       getFirestore,
@@ -75,77 +72,41 @@
       appId: "1:615646418497:web:69f5871dab6037283058c0",
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    window.onload = () => {
-      const submitBtn = document.getElementById("submit");
+    document.getElementById("submit").addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-      // Login button click handler
-      submitBtn.addEventListener("click", async () => {
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value.trim();
+      if (!email || !password) {
+        alert("Please enter both email and password.");
+        return;
+      }
+      if (!email.endsWith("@biet.ac.in")) {
+        alert("Please use your BIET institutional email (ending with @biet.ac.in).");
+        return;
+      }
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const uid = userCredential.user.uid;
+        const userDoc = await getDoc(doc(db, "users", uid));
 
-        if (!email || !password) {
-          alert("Please enter both email and password.");
-          return;
-        }
-
-        if (!email.endsWith("@biet.ac.in")) {
-          alert("Please use your BIET institutional email (ending with @biet.ac.in).");
-          return;
-        }
-
-        submitBtn.disabled = true; // Disable button during login
-
-        try {
-          const userCredential = await signInWithEmailAndPassword(auth, email, password);
-          const uid = userCredential.user.uid;
-          const userDoc = await getDoc(doc(db, "users", uid));
-
-          if (userDoc.exists()) {
-            const role = userDoc.data().role;
-            if (role === "student") {
-              window.location.href = "student_dashboard.html";
-            } else {
-              alert("Access denied. This is the student login page.");
-            }
+        if (userDoc.exists()) {
+          const role = userDoc.data().role;
+          if (role === "teacher") {
+            window.location.href = "teacher_dashboard.html";
           } else {
-            alert("User data not found.");
+            alert("Access denied. This is the Teacher login page.");
           }
-        } catch (error) {
-          alert("Login failed: " + error.message);
-          document.getElementById("password").value = ""; // Clear password
-        } finally {
-          submitBtn.disabled = false; // Enable button again
+        } else {
+          alert("User data not found.");
         }
-      });
-
-      // Forgot Password link click handler
-      document.getElementById("forgot_password").addEventListener("click", async (e) => {
-        e.preventDefault();
-        const email = document.getElementById("email").value.trim();
-
-        if (!email) {
-          alert("Please enter your email in the email field above to reset your password.");
-          return;
-        }
-
-        if (!email.endsWith("@biet.ac.in")) {
-          alert("Please use your BIET institutional email (ending with @biet.ac.in).");
-          return;
-        }
-
-        try {
-          await sendPasswordResetEmail(auth, email);
-          alert("Password reset email sent! Please check your inbox.");
-        } catch (error) {
-          alert("Error sending reset email: " + error.message);
-        }
-      });
-    };
+      } catch (error) {
+        alert("Login failed: " + error.message);
+      }
+    });
   </script>
 </body>
 
